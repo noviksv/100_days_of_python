@@ -13,3 +13,4 @@ bill_per_person = bill_with_tips / people
 # Print the bill per person with 2 decimal places
 print(f"Each person should pay: ${bill_per_person:.2f}")
 
+
