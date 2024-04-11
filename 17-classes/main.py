@@ -28,6 +28,7 @@ print(user1.some_attribute)
 
 
 user1.follow(user2)
+user2.follow(user1)
 print(user1.following)
 print(user1.followers)
 print(user2.following)
