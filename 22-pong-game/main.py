@@ -2,6 +2,10 @@ from turtle import Screen, exitonclick
 import time
 from paddle import Paddle
 from ball import Ball
+from scoreboard import Scoreboard
+
+INITIAL_SPEED = 0.1
+speed = INITIAL_SPEED
 
 # Screen setup
 screen = Screen()
@@ -20,12 +24,13 @@ screen.onkey(right_paddle.up, "Up")
 screen.onkey(right_paddle.down, "Down")
 
 ball = Ball()
+scoreboard = Scoreboard()
 screen.listen()
 screen.update()
 
 is_game_on = True
 while is_game_on:
-    time.sleep(0.1)
+    time.sleep(speed)
     ball.move()
     
     #detect collision with the wall
@@ -35,10 +40,20 @@ while is_game_on:
     #detect collision with the paddles
     if ball.distance(right_paddle) < 50 and ball.xcor() > 320 or ball.distance(left_paddle) < 50 and ball.xcor() < -320:
         ball.bounce_x()
+        speed /=2
+        print (speed)
 
-    #detect when the ball goes out of bounds
-    if ball.xcor() > 380 or ball.xcor() < -380:
+    #detect when R paddle misses
+    if ball.xcor() > 380:
         ball.reset_position()
+        speed = INITIAL_SPEED
+        scoreboard.increase_left_score()
+        
+    #detect when L paddle misses
+    if  ball.xcor() < -380:
+        ball.reset_position()
+        speed = INITIAL_SPEED
+        scoreboard.increase_right_score()
         
 
     screen.update()
