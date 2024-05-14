@@ -6,7 +6,7 @@ GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
 WORK_MIN = 1
-SHORT_BREAK_MIN = 5
+SHORT_BREAK_MIN = 1
 LONG_BREAK_MIN = 20
 reps = 0
 
@@ -38,6 +38,11 @@ def count_down(count):
         window.after(100, count_down, count - 1)
     else:
         start_timer()
+        marks = ""
+        work_sessions = reps // 2
+        for _ in range(work_sessions):
+            marks += "✔"
+            tick_marks.config(text=marks)
 
 
 
@@ -53,6 +58,8 @@ canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
 timer_label = Label(window, text="Timer", font=(FONT_NAME, 35, "bold"),bg=YELLOW, fg=GREEN)
 timer_label.grid(row = 0, column = 1) 
 
+tick_marks = Label(text="", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 35, "bold"))
+tick_marks.grid(row=3, column=1)
 
 # add a green label with text Timer
 
@@ -70,8 +77,6 @@ start_button.grid(row=2, column=0)
 start_button = Button(text="Finish")
 start_button.grid(row=2, column=3)
 
-tick_marks = Label(text="✔", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 35, "bold"))
-tick_marks.grid(row=3, column=1)
 
 
 
