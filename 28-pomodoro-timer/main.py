@@ -5,23 +5,40 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+reps = 0
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 
 def start_timer():
-    count_down(5)
+    global reps
+    reps += 1
+    if reps % 8 == 0:
+        count_down(LONG_BREAK_MIN * 60)
+        timer_label.config(text="Break", fg=RED)
+    elif reps % 2 != 0:
+        count_down(WORK_MIN * 60)
+        timer_label.config(text="Work", fg=GREEN)
+    elif reps % 2 == 0:
+        count_down(SHORT_BREAK_MIN * 60)
+        timer_label.config(text="Break", fg=PINK)
+
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
-    canvas.itemconfig(timer_countdown_text, text=count)
+    count_min = count // 60
+    count_sec = count % 60
+    canvas.itemconfig(timer_countdown_text, text=f"{count_min}:{count_sec:02}")
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        window.after(100, count_down, count - 1)
+    else:
+        start_timer()
+
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -46,7 +63,6 @@ canvas.create_image(100, 112, image=tomato_img)
 timer_countdown_text = canvas.create_text(100, 130, text="00:00", font=(FONT_NAME, 35, "bold"), fill="white")
 canvas.grid(row=1, column=1)
 
-count_down(5)
 
 start_button = Button(text="Start", command=start_timer)
 start_button.grid(row=2, column=0)
