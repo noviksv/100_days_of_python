@@ -11,6 +11,13 @@ LONG_BREAK_MIN = 20
 reps = 0
 timer = None
 
+def play_sound():
+    import winsound
+    frequency = 2500  # Set Frequency To 2500 Hertz
+    duration = 1000  # Set Duration To 1000 ms == 1 second
+    winsound.Beep(frequency, duration)
+    
+
 # ---------------------------- TIMER RESET ------------------------------- # 
 def reset_timer():
     window.after_cancel(timer)
@@ -53,6 +60,7 @@ def count_down(count):
         for _ in range(work_sessions):
             marks += "✔"
             tick_marks.config(text=marks)
+        play_sound()
 
 
 
