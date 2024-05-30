@@ -18,5 +18,9 @@ print(nato_alphabet)
 
 word = input("Enter a word: ").upper()
 for i in word:
-    print(f"{i} as {nato_alphabet[i]}")
+    try:
+        print(f"{i} as {nato_alphabet[i]}")
+    except KeyError:
+        print("Sorry, only letters in the alphabet please")
+        break
 
