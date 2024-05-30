@@ -15,12 +15,15 @@ print(nato_alphabet)
 
 
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-
-word = input("Enter a word: ").upper()
-for i in word:
+def generate_phonetic():
+    
+    word = input("Enter a word: ").upper()
     try:
-        print(f"{i} as {nato_alphabet[i]}")
+        word_list = [nato_alphabet[i] for i in word]
     except KeyError:
         print("Sorry, only letters in the alphabet please")
-        break
+        generate_phonetic()
+    else:
+        print(word_list)
 
+generate_phonetic()
