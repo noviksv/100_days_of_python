@@ -20,12 +20,6 @@ def get_random_word(data):
 
 # ---------------------------- BUTTON COMMANDS ------------------------------- #
 
-def next_word():
-    global random_word
-    random_word = get_random_word(data)
-    canvas.itemconfig(card_background, image=card_front_img)
-    canvas.itemconfig(title_label, text="French")
-    canvas.itemconfig(word_label, text=random_word["French"])
 
 def flip_card():
     global random_word
@@ -33,6 +27,14 @@ def flip_card():
     canvas.itemconfig(title_label, text="English")
     canvas.itemconfig(word_label, text=random_word["English"])
     
+    
+def next_word():
+    global random_word
+    random_word = get_random_word(data)
+    canvas.itemconfig(card_background, image=card_front_img)
+    canvas.itemconfig(title_label, text="French")
+    canvas.itemconfig(word_label, text=random_word["French"])
+    window.after(3000, flip_card)
 
 
 
@@ -63,19 +65,11 @@ wrong_button.grid(row=1, column=0)
 
 #add labels
 title_label = canvas.create_text(400, 150, text="Title", font=("Ariel", 40, "italic"))
-# title_label = Label(text="French", font=("Ariel", 40, "italic"))
-# title_label.grid(row=0, column=0, columnspan=2)
-#title_label.config(bg="white")
-#title_label.place(x=400, y=150, anchor="center")
 word_label = canvas.create_text(400, 263, text="Word", font=("Ariel", 60, "bold"))
 
-# word_label = Label(text="Word", font=("Ariel", 60, "bold"))
-# word_label.grid(row=0, column=0, columnspan=2)
-# word_label.config(bg=BACKGROUND_COLOR)
-# word_label.place(x=400, y=263, anchor="center")
 next_word()
 
-window.after(3000, flip_card)
+
 
 window.mainloop()
 
