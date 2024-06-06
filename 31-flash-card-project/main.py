@@ -1,5 +1,8 @@
 BACKGROUND_COLOR = "#B1DDC6"
 
+FOREIGN_WORD = "polski"
+NATIVE_WORD = "english"
+
 from tkinter import *
 import pandas as pd
 import random
@@ -12,7 +15,7 @@ def load_data():
         data = pd.read_csv("data/words_to_learn.csv")
         return data 
     except FileNotFoundError:
-        data = pd.read_csv("data/french_words.csv")
+        data = pd.read_csv("data/foreign_words.csv")
         return data
     except Exception as e:
         print(e)
@@ -29,22 +32,22 @@ def get_random_word(data):
 def flip_card():
     global random_word
     canvas.itemconfig(card_background, image=card_back_img)
-    canvas.itemconfig(title_label, text="English")
-    canvas.itemconfig(word_label, text=random_word["English"])
+    canvas.itemconfig(title_label, text=NATIVE_WORD)
+    canvas.itemconfig(word_label, text=random_word["native"])
     
     
 def next_word(status="wrong"):
     global random_word
     random_word = get_random_word(data)
     canvas.itemconfig(card_background, image=card_front_img)
-    canvas.itemconfig(title_label, text="French")
-    canvas.itemconfig(word_label, text=random_word["French"])
+    canvas.itemconfig(title_label, text=FOREIGN_WORD)
+    canvas.itemconfig(word_label, text=random_word["foreign"])
     if status == "right":
-        remove_word(random_word["French"])
+        remove_word(random_word["foreign"])
     window.after(3000, flip_card)
 
 def remove_word(word):
-    data.drop(data[data["French"] == word].index, inplace=True)
+    data.drop(data[data["foreign"] == word].index, inplace=True)
     data.to_csv("data/words_to_learn.csv", index=False)
 
 
