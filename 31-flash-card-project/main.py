@@ -9,10 +9,15 @@ global random_word
 
 def load_data():
     try:
-        data = pd.read_csv("data/french_words.csv")
+        data = pd.read_csv("data/words_to_learn.csv")
         return data 
     except FileNotFoundError:
-        print("File not found")
+        data = pd.read_csv("data/french_words.csv")
+        return data
+    except Exception as e:
+        print(e)
+        return None
+
     
 
 def get_random_word(data):
@@ -28,13 +33,19 @@ def flip_card():
     canvas.itemconfig(word_label, text=random_word["English"])
     
     
-def next_word():
+def next_word(status="wrong"):
     global random_word
     random_word = get_random_word(data)
     canvas.itemconfig(card_background, image=card_front_img)
     canvas.itemconfig(title_label, text="French")
     canvas.itemconfig(word_label, text=random_word["French"])
+    if status == "right":
+        remove_word(random_word["French"])
     window.after(3000, flip_card)
+
+def remove_word(word):
+    data.drop(data[data["French"] == word].index, inplace=True)
+    data.to_csv("data/words_to_learn.csv", index=False)
 
 
 
@@ -53,19 +64,19 @@ card_back_img = PhotoImage(file="images/card_back.png")
 card_background = canvas.create_image(400, 263, image=card_front_img)
 canvas.grid(row=0, column=0, columnspan=2)
 canvas.configure(bg=BACKGROUND_COLOR, highlightthickness=0)
-
-#add buttons
-right_img = PhotoImage(file="images/right.png")
-right_button = Button(image=right_img, highlightthickness=0, command=next_word)
-right_button.grid(row=1, column=1)
-
-wrong_img = PhotoImage(file="images/wrong.png")
-wrong_button = Button(image=wrong_img, highlightthickness=0, command=next_word)
-wrong_button.grid(row=1, column=0)
-
 #add labels
 title_label = canvas.create_text(400, 150, text="Title", font=("Ariel", 40, "italic"))
 word_label = canvas.create_text(400, 263, text="Word", font=("Ariel", 60, "bold"))
+
+#add buttons
+right_img = PhotoImage(file="images/right.png")
+right_button = Button(image=right_img, highlightthickness=0, command=lambda: next_word("right"))
+right_button.grid(row=1, column=1)
+
+wrong_img = PhotoImage(file="images/wrong.png")
+wrong_button = Button(image=wrong_img, highlightthickness=0, command=lambda: next_word("wrong"))
+wrong_button.grid(row=1, column=0)
+
 
 next_word()
 
