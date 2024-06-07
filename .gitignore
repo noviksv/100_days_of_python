@@ -3,3 +3,4 @@ __pycache__/
 .DS_Store
 */Output/ReadyToSend/*
 31-flash-card-project/data/words_to_learn.csv
+*/.env
