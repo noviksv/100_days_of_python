@@ -28,7 +28,7 @@ SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 SMTP_FROM = os.getenv("SMTP_FROM")
 
 def send_email(message_body):
-    with smtplib.SMTP(SMTP_HOST) as connection:
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as connection:
         connection.starttls()
         connection.login(user=SMTP_LOGIN, password=SMTP_PASSWORD)
         connection.sendmail(
