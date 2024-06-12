@@ -1,5 +1,9 @@
 import requests
 import datetime as dt
+from config import send_email
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 MY_LAT = 52.26131518259818
@@ -18,18 +22,19 @@ def is_daylight_hours():
     #check if current time is daylight hours
 
     if  dt.datetime.fromisoformat(sunrise)<= dt.datetime.now(dt.UTC) <= dt.datetime.fromisoformat(sunset):
-        print("There is a daylight hours.")
+        logging.debug("There is a daylight hours.")
         return True
     else:
-        print("There is nighttime.")
+        logging.debug("There is nighttime.")
         return False
 
 def check_iss_position():
+    #first provider for iss position
     responce = requests.get("http://api.open-notify.org/iss-now.json")
     responce.raise_for_status()
 
     data = responce.json()
-    #print(data)
+    #logging.info(data)
 
     longitude = data["iss_position"]["longitude"]   
     latitude = data["iss_position"]["latitude"]
@@ -44,7 +49,7 @@ def check_iss_position_v2():
     responce.raise_for_status()
 
     data = responce.json()
-    #print(data)
+    #logging.info(data)
 
     longitude = data["longitude"]   
     latitude = data["latitude"]
@@ -59,17 +64,16 @@ def is_iss_nearby():
     except:
         iss_position = check_iss_position()
 
-    print(f"Current position of iss is {iss_position}")
+    logging.debug(f"Current position of iss is {iss_position}")
     if MY_LAT-5 <= iss_position[0] <= MY_LAT+5 and MY_LONG-5 <= iss_position[1] <= MY_LONG+5:
-        #print("ISS is nearby.")
         return True
     else:
-        #print("ISS is not nearby.")
         return False
 
 
 if __name__ == "__main__":
     if not is_daylight_hours() and is_iss_nearby():
-        print("Look up, ISS is nearby.")
+        logging.debug("Look up, ISS is nearby.")
+        send_email("Look at the sky", "Look up, ISS is nearby.")
     else:
-        print("ISS is not nearby or it is daylight.")
+        logging.debug("ISS is not nearby or it is daylight.")
