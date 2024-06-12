@@ -1,37 +1,75 @@
 import requests
-from datetime import datetime
-
-MY_LAT = 51.507351 # Your latitude
-MY_LONG = -0.127758 # Your longitude
-
-response = requests.get(url="http://api.open-notify.org/iss-now.json")
-response.raise_for_status()
-data = response.json()
-
-iss_latitude = float(data["iss_position"]["latitude"])
-iss_longitude = float(data["iss_position"]["longitude"])
-
-#Your position is within +5 or -5 degrees of the ISS position.
+import datetime as dt
 
 
-parameters = {
-    "lat": MY_LAT,
-    "lng": MY_LONG,
-    "formatted": 0,
-}
+MY_LAT = 52.26131518259818
+MY_LONG = 20.95682398281323
 
-response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
-response.raise_for_status()
-data = response.json()
-sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
-sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+def is_daylight_hours():
+    params={"lat": MY_LAT, "lng": MY_LONG, "formatted": 0}
+    #https://api.sunrise-sunset.org/json?lat=52.26131518259818&lng=20.95682398281323&formatted=0
+    responce = requests.get(url="https://api.sunrise-sunset.org/json", params=params)
 
-time_now = datetime.now()
+    responce.raise_for_status()
 
-#If the ISS is close to my current position
-# and it is currently dark
-# Then send me an email to tell me to look up.
-# BONUS: run the code every 60 seconds.
+    data = responce.json()
+    sunrise = data["results"]["sunrise"]
+    sunset = data["results"]["sunset"]
+    #check if current time is daylight hours
+
+    if  dt.datetime.fromisoformat(sunrise)<= dt.datetime.now(dt.UTC) <= dt.datetime.fromisoformat(sunset):
+        print("There is a daylight hours.")
+        return True
+    else:
+        print("There is nighttime.")
+        return False
+
+def check_iss_position():
+    responce = requests.get("http://api.open-notify.org/iss-now.json")
+    responce.raise_for_status()
+
+    data = responce.json()
+    #print(data)
+
+    longitude = data["iss_position"]["longitude"]   
+    latitude = data["iss_position"]["latitude"]
+
+    iss_position = (longitude, latitude)
+
+    return (iss_position)
+
+def check_iss_position_v2():
+    #second provider for iss position
+    responce = requests.get("https://api.wheretheiss.at/v1/satellites/25544")
+    responce.raise_for_status()
+
+    data = responce.json()
+    #print(data)
+
+    longitude = data["longitude"]   
+    latitude = data["latitude"]
+
+    iss_position = (longitude, latitude)
+
+    return (iss_position)
+
+def is_iss_nearby():
+    try:
+        iss_position = check_iss_position_v2()
+    except:
+        iss_position = check_iss_position()
+
+    print(f"Current position of iss is {iss_position}")
+    if MY_LAT-5 <= iss_position[0] <= MY_LAT+5 and MY_LONG-5 <= iss_position[1] <= MY_LONG+5:
+        #print("ISS is nearby.")
+        return True
+    else:
+        #print("ISS is not nearby.")
+        return False
 
 
-
+if __name__ == "__main__":
+    if not is_daylight_hours() and is_iss_nearby():
+        print("Look up, ISS is nearby.")
+    else:
+        print("ISS is not nearby or it is daylight.")
