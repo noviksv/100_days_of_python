@@ -25,12 +25,12 @@ class QuizInterface:
 
         right_button_img = PhotoImage(file="images/true.png")
         self.right_button = Button(image=right_button_img, highlightthickness=0, padx=20, pady=20, 
-                                   command=lambda: quiz_brain.check_answer('True'))
+                                   command=self.got_it_right)
         self.right_button.grid(row=2, column=0, pady=20)
 
         wrong_button_img = PhotoImage(file="images/false.png")
         self.wrong_button = Button(image=wrong_button_img, highlightthickness=0, padx=20, pady=20,
-                                    command=lambda: quiz_brain.check_answer('False'))
+                                    command=self.got_it_wrong)
         self.wrong_button.grid(row=2, column=1, pady=20)  # Add padx=10 for left and right padding
         
         
@@ -40,5 +40,34 @@ class QuizInterface:
         self.window.mainloop()
 
     def get_next_question(self):
-        q_text = self.quiz.next_question()
-        self.canvas.itemconfig(self.question_text, text=q_text)
+        if self.quiz.still_has_questions():
+            q_text = self.quiz.next_question()
+            self.canvas.config(bg="white")
+            self.canvas.itemconfig(self.question_text, text=q_text)
+        else:
+            self.canvas.itemconfig(self.question_text, text="You've reached the end of the quiz.")
+            self.right_button.config(state="disabled")
+            self.wrong_button.config(state="disabled")
+        
+
+
+    def got_it_right(self):
+        is_right = self.quiz.check_answer(user_answer='True')
+        self.give_feedback_to_user(is_right=is_right)
+
+        
+
+    def got_it_wrong(self):
+        is_right =  self.quiz.check_answer('False')
+        self.give_feedback_to_user(is_right=is_right)
+
+
+    def give_feedback_to_user(self, is_right):
+        if is_right:
+            self.canvas.config(bg="green")
+        else:
+            self.canvas.config(bg="red")
+
+        self.window.after(1000 ,self.get_next_question)
+        self.score_label.config(text=f"Score: {self.quiz.score}")
+        #self.window.after(1000 ,lambda: self.canvas.config(bg="white")  )  
