@@ -3,20 +3,21 @@ from dotenv import load_dotenv
 import logging
 import os
 import json
+from twilio_sms import send_message
 
 logging.basicConfig(level=logging.DEBUG)
 
 load_dotenv()
 
 OWM_Endpoint = 'https://api.openweathermap.org/data/2.5/forecast'
-API_KEY = os.getenv("API_KEY")
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 LAT = os.getenv("LAT")
 LON = os.getenv("LON")
 
 params = {
     "lat": LAT,
     "lon": LON,
-    "appid": API_KEY,
+    "appid": WEATHER_API_KEY,
     "units": "metric",
     "cnt": 4
 }
@@ -48,6 +49,9 @@ def is_raining(data):
 #     file.write(str( json.dumps(data, indent=4)))
 
 if is_raining(data=data):
-    logging.debug('Do not forget the umbrella!!!')
+    msg = 'Do not forget the umbrella!!!'
+    logging.debug(msg=msg)
+    send_message(account_sid=os.getenv("TWILIO_ACCOUNT_SID"), auth_token=os.getenv("TWILIO_AUTH_TOKEN")
+                 , from_=os.getenv("TWILIO_FROM"), to=os.getenv("TWILIO_TO"), message_body=msg)
 else:
-    logging.debug('Relax! Sky si blue')
+    logging.debug('Relax! Sky is blue')
