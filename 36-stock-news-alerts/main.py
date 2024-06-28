@@ -16,8 +16,8 @@ before_yesterday = (date.today() - timedelta(days=2)).isoformat()
 STOCK = "TSLA"
 NEWS_API_QUERY = "tesla"
 COMPANY_NAME = "Tesla Inc"
-STOCK_API_KEY = "DRZQPXF4S00YE0BR"
-NEWS_API_KEY = "8539a0038fe3415aa2348ada6700fc05"
+STOCK_API_KEY = os.getenv("STOCK_API_KEY")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 
 def get_stock_data(api_key, stock):
@@ -29,36 +29,36 @@ def get_stock_data(api_key, stock):
     r.raise_for_status()
     data = r.json()
     #in case of reach API limits
-    data = {
-    "Meta Data": {
-        "1. Information": "Daily Prices (open, high, low, close) and Volumes",
-        "2. Symbol": "IBM",
-        "3. Last Refreshed": "2024-06-26",
-        "4. Output Size": "Compact",
-        "5. Time Zone": "US/Eastern"
-    },
-    "Time Series (Daily)": {
-        "2024-06-26": {
-            "1. open": "171.2800",
-            "2. high": "172.6800",
-            "3. low": "170.4100",
-            "4. close": "171.8700",
-            "5. volume": "2779016"
-        },
-        "2024-06-25": {
-            "1. open": "175.1400",
-            "2. high": "175.7526",
-            "3. low": "171.4200",
-            "4. close": "172.6000",
-            "5. volume": "4119267"
-        },
-        "2024-06-24": {
-            "1. open": "175.0000",
-            "2. high": "178.4599",
-            "3. low": "174.1500",
-            "4. close": "175.0100",
-            "5. volume": "4864735"
-        }}}
+    # data = {
+    # "Meta Data": {
+    #     "1. Information": "Daily Prices (open, high, low, close) and Volumes",
+    #     "2. Symbol": "IBM",
+    #     "3. Last Refreshed": "2024-06-26",
+    #     "4. Output Size": "Compact",
+    #     "5. Time Zone": "US/Eastern"
+    # },
+    # "Time Series (Daily)": {
+    #     "2024-06-26": {
+    #         "1. open": "171.2800",
+    #         "2. high": "172.6800",
+    #         "3. low": "170.4100",
+    #         "4. close": "171.8700",
+    #         "5. volume": "2779016"
+    #     },
+    #     "2024-06-25": {
+    #         "1. open": "175.1400",
+    #         "2. high": "175.7526",
+    #         "3. low": "171.4200",
+    #         "4. close": "172.6000",
+    #         "5. volume": "4119267"
+    #     },
+    #     "2024-06-24": {
+    #         "1. open": "175.0000",
+    #         "2. high": "178.4599",
+    #         "3. low": "174.1500",
+    #         "4. close": "175.0100",
+    #         "5. volume": "4864735"
+    #     }}}
     return data
 
 
