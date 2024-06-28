@@ -45,9 +45,26 @@ today=datetime.datetime.now().strftime('%Y%m%d')
 
 add_pixel_config = {
     "date": today,
-    "quantity": "1"
+    "quantity": "3"
 
 }
 
-response = requests.post(url=add_pixel_endpoint, json=add_pixel_config, headers=headers)
+# response = requests.post(url=add_pixel_endpoint, json=add_pixel_config, headers=headers)
+# print(response.text)
+
+# update endpoint
+update_pixel_endpoint = f"{pixela_endpoint}/{PIXELA_USER}/graphs/{graph_id}/20240627"
+
+update_pixel_config = {
+    "date": today,
+    "quantity": "5"
+}
+
+response = requests.put(url=update_pixel_endpoint, json=update_pixel_config, headers=headers)
+print(response.text)
+
+# delete pixel endpoint
+delete_pixel_endpoint = f"{pixela_endpoint}/{PIXELA_USER}/graphs/{graph_id}/20240627"
+
+response = requests.delete(url=update_pixel_endpoint, json=update_pixel_config, headers=headers)
 print(response.text)
