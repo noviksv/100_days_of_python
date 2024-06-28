@@ -1,6 +1,7 @@
 import requests
 from dotenv import load_dotenv
 import os
+import datetime
 
 load_dotenv()
  
@@ -40,8 +41,10 @@ graph_id = "graph1"
 
 add_pixel_endpoint = f"{pixela_endpoint}/{PIXELA_USER}/graphs/{graph_id}"
 
+today=datetime.datetime.now().strftime('%Y%m%d')
+
 add_pixel_config = {
-    "date": "20240625",
+    "date": today,
     "quantity": "1"
 
 }
