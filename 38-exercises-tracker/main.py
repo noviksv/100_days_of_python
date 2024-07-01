@@ -14,7 +14,7 @@ def add_records_to_sheet(workout_params):
 
     sheety_endpoint  =  os.getenv("SHEETY_ENDPOINT")
     headers = {
-        "Authorization": f"{os.getenv('SHEETY_BASIC_AUTH')}"
+        "Authorization": f"Bearer {os.getenv('SHEETY_BEARER')}"
     }
     sheety_params = {"workout":
                      workout_params }
