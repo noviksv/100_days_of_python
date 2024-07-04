@@ -60,8 +60,16 @@ class FlightSearch():
         response = requests.get(url, headers=headers, params=params)
 
         if response.status_code == 200:
-            iata_code = response.json().get('data')[0].get('iataCode')
-            print(f'IATA code for {city_name}: {iata_code}')
+            try:
+                iata_code = response.json().get('data')[0].get('iataCode')
+                print(f'IATA code for {city_name}: {iata_code}')
+            except IndexError:
+                print(f"IndexError: No airport code found for {city_name}.")
+                return "N/A"
+            except (KeyError, TypeError):
+                print(f"KeyError or TypeError: No airport code found for {city_name}.")
+                return "Not Found"
+            
             return iata_code
         else:
             print(f'Failed to obtain IATA code. Status code: {response.status_code}')
