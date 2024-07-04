@@ -16,9 +16,9 @@ my_destinations = DataManager()
 sheet_data = my_destinations.get_sheet_data()
 pprint(sheet_data)
 if sheet_data[0]["iataCode"] == "":
+    fl = FlightSearch()
     for destination in sheet_data:
-        destination["iataCode"] = FlightSearch(destination["city"]).search()
-        #my_destinations.update_destination_codes(destination)
+        destination["iataCode"] = fl.search_iata_by_city_name(destination["city"])
     my_destinations.destination_data = sheet_data
     my_destinations.update_destination_codes()
     
