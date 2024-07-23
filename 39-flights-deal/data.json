@@ -1,0 +1,323 @@
+{
+    "meta": {
+        "count": 2,
+        "links": {
+            "self": "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=WAW&destinationLocationCode=JFK&departureDate=2024-07-30&adults=1&max=10&nonStop=true"
+        }
+    },
+    "data": [
+        {
+            "type": "flight-offer",
+            "id": "1",
+            "source": "GDS",
+            "instantTicketingRequired": false,
+            "nonHomogeneous": false,
+            "oneWay": false,
+            "isUpsellOffer": false,
+            "lastTicketingDate": "2024-07-26",
+            "lastTicketingDateTime": "2024-07-26",
+            "numberOfBookableSeats": 8,
+            "itineraries": [
+                {
+                    "duration": "PT9H30M",
+                    "segments": [
+                        {
+                            "departure": {
+                                "iataCode": "WAW",
+                                "at": "2024-07-30T16:50:00"
+                            },
+                            "arrival": {
+                                "iataCode": "JFK",
+                                "terminal": "7",
+                                "at": "2024-07-30T20:20:00"
+                            },
+                            "carrierCode": "LO",
+                            "number": "26",
+                            "aircraft": {
+                                "code": "339"
+                            },
+                            "operating": {
+                                "carrierCode": "KF"
+                            },
+                            "duration": "PT9H30M",
+                            "id": "2",
+                            "numberOfStops": 0,
+                            "blacklistedInEU": false
+                        }
+                    ]
+                }
+            ],
+            "price": {
+                "currency": "EUR",
+                "total": "1496.01",
+                "base": "1325.00",
+                "fees": [
+                    {
+                        "amount": "0.00",
+                        "type": "SUPPLIER"
+                    },
+                    {
+                        "amount": "0.00",
+                        "type": "TICKETING"
+                    }
+                ],
+                "grandTotal": "1496.01",
+                "additionalServices": [
+                    {
+                        "amount": "75.00",
+                        "type": "CHECKED_BAGS"
+                    }
+                ]
+            },
+            "pricingOptions": {
+                "fareType": [
+                    "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": false
+            },
+            "validatingAirlineCodes": [
+                "LO"
+            ],
+            "travelerPricings": [
+                {
+                    "travelerId": "1",
+                    "fareOption": "STANDARD",
+                    "travelerType": "ADULT",
+                    "price": {
+                        "currency": "EUR",
+                        "total": "1496.01",
+                        "base": "1325.00"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "2",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "Y1HA0ENB",
+                            "brandedFare": "ECONOBAG",
+                            "brandedFareLabel": "ECONOMY NO BAG",
+                            "class": "Y",
+                            "includedCheckedBags": {
+                                "quantity": 0
+                            },
+                            "amenities": [
+                                {
+                                    "description": "1 ST CHECKED BAG UP TO 23KG",
+                                    "isChargeable": true,
+                                    "amenityType": "BAGGAGE",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "PREPAID TO 23KG OR EXC DIM",
+                                    "isChargeable": true,
+                                    "amenityType": "BAGGAGE",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "PRE RESERVED SEAT ASSIGNMENT",
+                                    "isChargeable": true,
+                                    "amenityType": "PRE_RESERVED_SEAT",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "HOT DINNER",
+                                    "isChargeable": false,
+                                    "amenityType": "MEAL",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "COMPLIMENTARY FOOD AND BEV",
+                                    "isChargeable": false,
+                                    "amenityType": "MEAL",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "UPGRADE MEAL",
+                                    "isChargeable": true,
+                                    "amenityType": "MEAL",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "flight-offer",
+            "id": "2",
+            "source": "GDS",
+            "instantTicketingRequired": false,
+            "nonHomogeneous": false,
+            "oneWay": false,
+            "isUpsellOffer": false,
+            "lastTicketingDate": "2024-07-26",
+            "lastTicketingDateTime": "2024-07-26",
+            "numberOfBookableSeats": 3,
+            "itineraries": [
+                {
+                    "duration": "PT9H20M",
+                    "segments": [
+                        {
+                            "departure": {
+                                "iataCode": "WAW",
+                                "at": "2024-07-30T12:25:00"
+                            },
+                            "arrival": {
+                                "iataCode": "JFK",
+                                "terminal": "7",
+                                "at": "2024-07-30T15:45:00"
+                            },
+                            "carrierCode": "LO",
+                            "number": "6",
+                            "aircraft": {
+                                "code": "789"
+                            },
+                            "operating": {
+                                "carrierCode": "LO"
+                            },
+                            "duration": "PT9H20M",
+                            "id": "1",
+                            "numberOfStops": 0,
+                            "blacklistedInEU": false
+                        }
+                    ]
+                }
+            ],
+            "price": {
+                "currency": "EUR",
+                "total": "1818.01",
+                "base": "1607.00",
+                "fees": [
+                    {
+                        "amount": "0.00",
+                        "type": "SUPPLIER"
+                    },
+                    {
+                        "amount": "0.00",
+                        "type": "TICKETING"
+                    }
+                ],
+                "grandTotal": "1818.01"
+            },
+            "pricingOptions": {
+                "fareType": [
+                    "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": true
+            },
+            "validatingAirlineCodes": [
+                "LO"
+            ],
+            "travelerPricings": [
+                {
+                    "travelerId": "1",
+                    "fareOption": "STANDARD",
+                    "travelerType": "ADULT",
+                    "price": {
+                        "currency": "EUR",
+                        "total": "1818.01",
+                        "base": "1607.00"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "1",
+                            "cabin": "PREMIUM_ECONOMY",
+                            "fareBasis": "P1HANEY0",
+                            "brandedFare": "PRESTAND",
+                            "brandedFareLabel": "PREMIUM STANDARD",
+                            "class": "P",
+                            "includedCheckedBags": {
+                                "quantity": 2
+                            },
+                            "amenities": [
+                                {
+                                    "description": "PREPAID TO 23KG OR EXC DIM",
+                                    "isChargeable": true,
+                                    "amenityType": "BAGGAGE",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "PRE RESERVED SEAT ASSIGNMENT",
+                                    "isChargeable": false,
+                                    "amenityType": "PRE_RESERVED_SEAT",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "HOT DINNER",
+                                    "isChargeable": false,
+                                    "amenityType": "MEAL",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "COMPLIMENTARY FOOD AND BEV",
+                                    "isChargeable": false,
+                                    "amenityType": "MEAL",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "MILEAGE ACCRUAL",
+                                    "isChargeable": false,
+                                    "amenityType": "BRANDED_FARES",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                },
+                                {
+                                    "description": "CHANGE ANYTIME",
+                                    "isChargeable": true,
+                                    "amenityType": "BRANDED_FARES",
+                                    "amenityProvider": {
+                                        "name": "BrandedFare"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "dictionaries": {
+        "locations": {
+            "WAW": {
+                "cityCode": "WAW",
+                "countryCode": "PL"
+            },
+            "JFK": {
+                "cityCode": "NYC",
+                "countryCode": "US"
+            }
+        },
+        "aircraft": {
+            "789": "BOEING 787-9",
+            "339": "AIRBUS A330-900NEO PASSENGER"
+        },
+        "currencies": {
+            "EUR": "EURO"
+        },
+        "carriers": {
+            "LO": "LOT POLISH AIRLINES",
+            "KF": "AIR BELGIUM"
+        }
+    }
+}

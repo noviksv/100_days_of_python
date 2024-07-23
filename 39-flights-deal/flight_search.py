@@ -43,9 +43,6 @@ class FlightSearch():
             return None
     
 
-#access_token = get_access_token()
-
-#access_token = 'H8ZvqWOCaH7VA6B7kJVPmEqAIULs'
 
     def search_iata_by_city_name(self, city_name):
         url = 'https://test.api.amadeus.com/v1/reference-data/locations/cities'
@@ -74,3 +71,26 @@ class FlightSearch():
         else:
             print(f'Failed to obtain IATA code. Status code: {response.status_code}')
             print(response.text)
+
+    def search_flight_offers(self, origin_location_code, destination_location_code, departure_date, adults, max_results):
+        url = 'https://test.api.amadeus.com/v2/shopping/flight-offers'
+        headers = {
+            'Authorization': f'Bearer {self.access_token}',
+            'Content-Type': 'application/json'
+        }
+
+        params = {
+            "originLocationCode": origin_location_code,
+            "destinationLocationCode": destination_location_code,
+            "departureDate": departure_date,
+            "adults": adults,
+            "max": max_results,
+            "nonStop": "true"
+        }
+        response = requests.get(url, headers=headers, params=params)
+
+        if response.status_code == 200:
+            return(response.json())
+        else:
+            print(f'Failed to obtain flight offers. Status code: {response.status_code}')
+            return(response.json())

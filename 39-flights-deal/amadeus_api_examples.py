@@ -1,6 +1,10 @@
 import requests
 from dotenv import load_dotenv
 import os
+from datetime import datetime, timedelta
+import time
+import json
+
 
 load_dotenv() # take environment variables from .env.
 #working with amadeus api
@@ -59,4 +63,66 @@ def search_iata_by_city_name(access_token, city_name):
         print(response.text)
 
 
-search_iata_by_city_name(access_token, 'Warsaw')
+# search_iata_by_city_name(access_token, 'Warsaw')
+
+def search_flight_offers(access_token, origin_location_code, destination_location_code, departure_date, adults, max_results):
+    url = 'https://test.api.amadeus.com/v2/shopping/flight-offers'
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+
+    params = {
+        "originLocationCode": origin_location_code,
+        "destinationLocationCode": destination_location_code,
+        "departureDate": departure_date,
+        "adults": adults,
+        "max": max_results,
+        "nonStop": "true"
+    }
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        return(response.json())
+    else:
+        print(f'Failed to obtain flight offers. Status code: {response.status_code}')
+        return(response.json())
+
+
+
+
+# Get tomorrow's date
+tomorrow = datetime.now().date() + timedelta(days=70)
+
+# Iterate over the next 180 days
+for day in range((tomorrow + timedelta(days=10) - tomorrow).days):
+    current_date = tomorrow + timedelta(days=day)
+    print(current_date)
+    
+
+    fo = search_flight_offers(access_token, 'WAW', 'NYC', current_date, 1, 10)
+    #pprint (fo)
+
+
+    #iterate every day from tomorrow to +180 days
+
+    try:
+        if fo["meta"]["count"] > 0:
+            print("Flight offers found:")
+            for flight_offer in fo['data']:
+                # print(flight_offer['itineraries'][0]['segments'][0]['departure']['iataCode'],'-->'
+                #     ,flight_offer['itineraries'][0]['segments'][0]['arrival']['iataCode'])
+                price = float(flight_offer['price']["grandTotal"])
+                currency = flight_offer['price']["currency"]
+                if price < 800:
+                    print("Price is low:", price, currency, current_date)
+
+        else:
+            print("No flight offers found.")
+    except:
+        print("skipping ",current_date )
+    time.sleep(0.5)
+
+    # with open("data.json", "w") as file:
+    #     json.dump(fo, file) 
+
