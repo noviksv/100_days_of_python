@@ -5,17 +5,18 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
+WORK_MIN = 20
 SHORT_BREAK_MIN = 1
 LONG_BREAK_MIN = 20
 reps = 0
 timer = None
 
 def play_sound():
-    import winsound
-    frequency = 2500  # Set Frequency To 2500 Hertz
-    duration = 1000  # Set Duration To 1000 ms == 1 second
-    winsound.Beep(frequency, duration)
+    # import winsound
+    # frequency = 2500  # Set Frequency To 2500 Hertz
+    # duration = 1000  # Set Duration To 1000 ms == 1 second
+    # winsound.Beep(frequency, duration)
+    pass
     
 
 # ---------------------------- TIMER RESET ------------------------------- # 
@@ -52,7 +53,7 @@ def count_down(count):
     canvas.itemconfig(timer_countdown_text, text=f"{count_min}:{count_sec:02}")
     if count > 0:
         global timer
-        timer = window.after(100, count_down, count - 1)
+        timer = window.after(1000, count_down, count - 1)
     else:
         start_timer()
         marks = ""
